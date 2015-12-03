@@ -1,5 +1,10 @@
 {
-  "stage": 0,
-  "loose": "all",
+  "presets": [
+    "es2015",
+    "stage-1",
+    "react"
+  ],
+  "plugins": [
+    "react-require"
+  ]
 }
-

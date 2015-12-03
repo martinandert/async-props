@@ -1,17 +1,17 @@
 /*global __ASYNC_PROPS__*/
-import React from 'react'
-import RoutingContext from 'react-router/lib/RoutingContext'
+import { Component, PropTypes } from 'react'
+import { RoutingContext } from 'react-router'
 
-const { array, func, object } = React.PropTypes
+const { array, func, object } = PropTypes
 
 function last(arr) {
   return arr[arr.length - 1]
 }
 
 function eachComponents(components, iterator) {
-  for (var i = 0, l = components.length; i < l; i++) {
+  for (let i = 0, l = components.length; i < l; i++) {
     if (typeof components[i] === 'object') {
-      for (var key in components[i]) {
+      for (let key in components[i]) {
         iterator(components[i][key], i, key)
       }
     } else {
@@ -21,7 +21,7 @@ function eachComponents(components, iterator) {
 }
 
 function filterAndFlattenComponents(components) {
-  var flattened = []
+  let flattened = []
   eachComponents(components, (Component) => {
     if (Component.loadProps)
       flattened.push(Component)
@@ -57,12 +57,12 @@ function loadAsyncProps(components, params, cb) {
 
 function lookupPropsForComponent(Component, propsAndComponents) {
   const { componentsArray, propsArray } = propsAndComponents
-  var index = componentsArray.indexOf(Component)
+  const index = componentsArray.indexOf(Component)
   return propsArray[index]
 }
 
 function mergePropsAndComponents(current, changes) {
-  for (var i = 0, l = changes.propsArray.length; i < l; i++) {
+  for (let i = 0, l = changes.propsArray.length; i < l; i++) {
     let Component = changes.componentsArray[i]
     let position = current.componentsArray.indexOf(Component)
     let isNew = position === -1
@@ -78,9 +78,9 @@ function mergePropsAndComponents(current, changes) {
 }
 
 function arrayDiff(previous, next) {
-  var diff = []
+  let diff = []
 
-  for (var i = 0, l = next.length; i < l; i++)
+  for (let i = 0, l = next.length; i < l; i++)
     if (previous.indexOf(next[i]) === -1)
       diff.push(next[i])
 
@@ -88,9 +88,9 @@ function arrayDiff(previous, next) {
 }
 
 function shallowEqual(a, b) {
-  var key
-  var ka = 0
-  var kb = 0
+  let key
+  let ka = 0
+  let kb = 0
 
   for (key in a) {
     if (a.hasOwnProperty(key) && a[key] !== b[key])
@@ -140,7 +140,7 @@ function hydrate(props) {
 }
 
 
-class AsyncPropsContainer extends React.Component {
+class AsyncPropsContainer extends Component {
 
   static propTypes = {
     Component: func.isRequired,
@@ -168,7 +168,7 @@ class AsyncPropsContainer extends React.Component {
 
 }
 
-class AsyncProps extends React.Component {
+class AsyncProps extends Component {
 
   static childContextTypes = {
     asyncProps: object
